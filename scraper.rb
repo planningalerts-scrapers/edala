@@ -26,11 +26,11 @@ ids.each do |id|
   url = "https://www.edala.sa.gov.au/edala/EDALAView.aspx?PageMode=ApplicationDisplayView&ApplicationId=#{id}"
   page = agent.get(url)
   record = {
-    council_reference: id,
-    description: page.at("#referencesummary1_0").search("td.content")[2].inner_text,
-    info_url: url,
-    comment_url: url,
-    date_received: Date.parse(page.at("#otherdetail1_0").search("td.content")[3].inner_text).to_s
+    "council_reference" => id,
+    "description" => page.at("#referencesummary1_0").search("td.content")[2].inner_text,
+    "info_url" => url,
+    "comment_url" => url,
+    "date_received" => Date.parse(page.at("#otherdetail1_0").search("td.content")[3].inner_text).to_s
   }
   # Nice spelling for the id!
   p = page.at("#propterydetail1_0").search("td.content")
@@ -45,9 +45,9 @@ ids.each do |id|
   else
     first = ""
   end
-  record[:address] = "#{first}#{street}, #{suburb}, SA"
-  record[:date_received]
-  record[:date_scraped] = Date.today.to_s
+  record["address"] = "#{first}#{street}, #{suburb}, SA"
+  record["date_received"]
+  record["date_scraped"] = Date.today.to_s
 
   #p record
   if (ScraperWiki.select("* from data where `council_reference`='#{record['council_reference']}'").empty? rescue true)
