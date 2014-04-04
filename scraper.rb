@@ -36,8 +36,8 @@ ids.each do |id|
   p = page.at("#propterydetail1_0").search("td.content")
   house_number = p[0].inner_text.strip
   lot_number = p[1].inner_text.strip
-  street = p[3].inner_text.strip
-  suburb = p[4].inner_text.strip
+  street = p[2].inner_text.strip
+  suburb = p[3].inner_text.strip
   if house_number
     first = "#{house_number} "
   elsif lot_number
