@@ -1,5 +1,6 @@
 require 'date'
 require 'mechanize'
+require 'scraperwiki'
 
 today = Date.today.strftime("%d+%b+%Y")
 two_days_ago = (Date.today - 2).strftime("%d+%b+%Y")
@@ -47,5 +48,11 @@ ids.each do |id|
   record[:address] = "#{first}#{street}, #{suburb}, SA"
   record[:date_received]
   record[:date_scraped] = Date.today.to_s
-  p record
+
+  #p record
+  if (ScraperWiki.select("* from data where `council_reference`='#{record['council_reference']}'").empty? rescue true)
+    ScraperWiki.save_sqlite(['council_reference'], record)
+  else
+    puts "Skipping already saved record " + record['council_reference']
+  end
 end
